@@ -1,7 +1,7 @@
 # TeleBotProj.NOX
 Telegrom Bot For Project NOX
 
-This telegram bot takes note of client booking and summary it and send to Scheduling Group.
+This telegram bot takes note of client booking and summary it and send to Project NOX - Bookings.
 Features:
   1.  Client Name
   2.  Contact:
