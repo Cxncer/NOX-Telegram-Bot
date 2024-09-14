@@ -70,13 +70,13 @@ async def total_price(update: Update, context: CallbackContext):
     
     # Summarize the data
     summary = (
-        f"Client Name:  {context.user_data['client_name']}\n"
-        f"Contact:      {context.user_data['contact']}\n"
-        f"Type:         {context.user_data['type']}\n"
-        f"Date:         {context.user_data['date']}\n"
-        f"Time:         {context.user_data['time']}\n"
-        f"People:       {context.user_data['people']}\n"
-        f"Total Price:  {context.user_data['total_price']}"
+        f"Client Name: {context.user_data['client_name']}\n"
+        f"Contact: {context.user_data['contact']}\n"
+        f"Type: {context.user_data['type']}\n"
+        f"Date: {context.user_data['date']}\n"
+        f"Time: {context.user_data['time']}\n"
+        f"People: {context.user_data['people']}\n"
+        f"Total Price: {context.user_data['total_price']}"
     )
 
     # Send the summary to the channel
