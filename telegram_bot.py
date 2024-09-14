@@ -22,7 +22,7 @@ def delete_webhook():
     print(response.json())  # Print response to verify successful webhook deletion
 
 # Channel username or chat ID to send the summary to
-TARGET_CHANNEL = '-2254931323'  # Replace this with your channel's username or chat ID
+TARGET_CHANNEL = '@projectnox_booking'  # Replace this with your channel's username or chat ID
 
 # Define states for the conversation
 CLIENT_NAME, CONTACT, TYPE, DATE, TIME, PEOPLE, TOTAL_PRICE = range(7)
