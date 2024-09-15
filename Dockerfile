@@ -1,20 +1,20 @@
-# Use the official Python image from the Docker Hub
-FROM python:3.11
+# Use an official Python runtime as a parent image
+FROM python:3.11-slim
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file into the container
-COPY requirements.txt .
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Install the dependencies
+# Install any needed packages specified in requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of the application code into the container
-COPY . .
+# Make the port specified by the PORT environment variable available
+EXPOSE ${PORT:-10000}
 
-# Expose the port that Render expects
-EXPOSE 8080
+# Define environment variable
+ENV PORT=${PORT:-10000}
 
-# Specify the command to run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "telegram_bot:app"]
+# Run the bot script when the container launches
+CMD ["python", "telegram_bot.py"]
