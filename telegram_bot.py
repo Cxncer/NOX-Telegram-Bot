@@ -23,9 +23,9 @@ TARGET_CHANNEL = '@projectnox_booking'  # Replace this with your channel's usern
 CLIENT_NAME, CONTACT, TYPE, DATE, TIME, PEOPLE, TOTAL_PRICE = range(7)
 
 # Initialize the Flask app
-flask_app = Flask(__name__)
+app = Flask(__name__)
 
-@flask_app.route('/')
+@app.route('/')
 def index():
     return 'Bot is running'
 

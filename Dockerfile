@@ -17,5 +17,4 @@ COPY . .
 EXPOSE 8080
 
 # Specify the command to run the application
-# Replace 'myapp:app' with your application's entry point
 CMD ["gunicorn", "--bind", "0.0.0.0:8080", "telegram_bot:app"]
