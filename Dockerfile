@@ -13,8 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code into the container
 COPY . .
 
-# Expose the port Render will use
+# Expose the port that Render expects
 EXPOSE 10000
 
 # Specify the command to run the application
-CMD ["python", "telegram_bot.py"]
+# Replace 'myapp:app' with your application's entry point
+CMD ["gunicorn", "--bind", "0.0.0.0:10000", "telegram_bot:app"]
