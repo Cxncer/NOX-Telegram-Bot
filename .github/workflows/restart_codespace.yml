@@ -49,5 +49,5 @@ jobs:
       # Step 6: Start a new Codespace
       - name: Start new Codespace
         run: |
-          REPO_URL="https://github.com/yourusername/yourrepository"
+          REPO_URL="https://github.com/Cxncer/NOX-Telegram-Bot"
           gh codespace create --repo "$REPO_URL"
