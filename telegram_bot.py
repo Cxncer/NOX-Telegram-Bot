@@ -15,12 +15,6 @@ TOKEN = os.getenv('TOKEN')
 if not TOKEN:
     raise ValueError("No TOKEN found in environment variables.")
 
-# Delete any existing webhook
-def delete_webhook():
-    url = f'https://api.telegram.org/bot{TOKEN}/deleteWebhook'
-    response = requests.get(url)
-    print(response.json())  # Print response to verify successful webhook deletion
-
 # Channel username or chat ID to send the summary to
 TARGET_CHANNEL = '@projectnox_booking'  # Replace this with your channel's username or chat ID
 
