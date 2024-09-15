@@ -2,7 +2,7 @@ name: Restart GitHub Codespaces
 
 on:
   schedule:
-    # Run every 15 minutes (*/15 * * * * means every 15 minutes)
+    # Run every 15 minutes
     - cron: '*/15 * * * *'
   workflow_dispatch: # Allows for manual triggering
     inputs:
@@ -19,9 +19,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Install GitHub CLI
-      - name: Install GitHub CLI
+      # Step 2: Install the latest GitHub CLI
+      - name: Install Latest GitHub CLI
         run: |
+          sudo apt-get update
+          sudo apt-get install -y curl
+          curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
           sudo apt-get update
           sudo apt-get install gh -y
 
