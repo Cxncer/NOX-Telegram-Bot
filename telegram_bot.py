@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ConversationHandler, CallbackContext
 from telegram.error import TelegramError
+from flask import Flask
 
 # Load environment variables from .env file
 load_dotenv()
@@ -20,6 +21,13 @@ TARGET_CHANNEL = '@projectnox_booking'  # Replace this with your channel's usern
 
 # Define states for the conversation
 CLIENT_NAME, CONTACT, TYPE, DATE, TIME, PEOPLE, TOTAL_PRICE = range(7)
+
+# Initialize the Flask app
+flask_app = Flask(__name__)
+
+@flask_app.route('/')
+def index():
+    return 'Bot is running'
 
 # Start the conversation
 async def start(update: Update, context: CallbackContext):
@@ -88,6 +96,7 @@ async def cancel(update: Update, context: CallbackContext):
     return ConversationHandler.END
 
 def main():
+    # Initialize the bot application
     application = Application.builder().token(TOKEN).build()
 
     # Define the ConversationHandler
@@ -111,11 +120,13 @@ def main():
     application.add_handler(CommandHandler('cancel', cancel))
     application.add_handler(CommandHandler('restart', restart))
 
-    # Run the bot
-    try:
-        application.run_polling()
-    except TelegramError as e:
-        print(f"Telegram Error: {e}")
+    # Run the bot with polling in a separate thread
+    from threading import Thread
+    bot_thread = Thread(target=lambda: application.run_polling())
+    bot_thread.start()
+
+    # Run the Flask server
+    flask_app.run(host='0.0.0.0', port=int(os.getenv('PORT', 8080)))
 
 if __name__ == '__main__':
     main()

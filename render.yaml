@@ -1,7 +1,0 @@
-services:
-  - type: web
-    name: telegram-bot
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python telegram_bot.py
-    port: 10000
