@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port Render will use
-EXPOSE 8080
+EXPOSE 10000
 
 # Specify the command to run the application
 CMD ["python", "telegram_bot.py"]
