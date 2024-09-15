@@ -1,5 +1,5 @@
 # Use the official Python image from the Docker Hub
-FROM python:3.9
+FROM python:3.11
 
 # Set the working directory in the container
 WORKDIR /app
@@ -14,8 +14,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port that Render expects
-EXPOSE 10000
+EXPOSE 8080
 
 # Specify the command to run the application
 # Replace 'myapp:app' with your application's entry point
-CMD ["gunicorn", "--bind", "0.0.0.0:10000", "telegram_bot:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "telegram_bot:app"]
