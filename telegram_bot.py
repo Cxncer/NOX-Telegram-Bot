@@ -29,11 +29,13 @@ CLIENT_NAME, CONTACT, TYPE, DATE, TIME, PEOPLE, TOTAL_PRICE = range(7)
 
 # Start the conversation
 async def start(update: Update, context: CallbackContext):
-    # The bot should only be used in a channel, so no need to check here.
-    await update.message.reply_text(
-        "Tos Book! Please enter the Client Name:"
-    )
+    await update.message.reply_text("Tos Book! Please enter the Client Name:")
     return CLIENT_NAME
+
+# Restart the conversation
+async def restart(update: Update, context: CallbackContext):
+    await update.message.reply_text("Restarting the booking process. Please enter the Client Name:")
+    return CLIENT_NAME  # Restart from the first step
 
 async def client_name(update: Update, context: CallbackContext):
     context.user_data['client_name'] = update.message.text
@@ -86,6 +88,7 @@ async def total_price(update: Update, context: CallbackContext):
 
     return ConversationHandler.END
 
+# Cancel the conversation
 async def cancel(update: Update, context: CallbackContext):
     await update.message.reply_text("Booking cancelled.")
     return ConversationHandler.END
@@ -105,13 +108,14 @@ def main():
             PEOPLE: [MessageHandler(filters.TEXT & ~filters.COMMAND, people)],
             TOTAL_PRICE: [MessageHandler(filters.TEXT & ~filters.COMMAND, total_price)],
         },
-        fallbacks=[CommandHandler('cancel', cancel)],
-        allow_reentry=True
+        fallbacks=[CommandHandler('cancel', cancel), CommandHandler('restart', restart)],
+        allow_reentry=True  # Allow re-entry to handle the restart command anywhere in the flow
     )
 
     # Add handlers to the application
     application.add_handler(conv_handler)
     application.add_handler(CommandHandler('cancel', cancel))
+    application.add_handler(CommandHandler('restart', restart))
 
     # Run the bot
     try:
