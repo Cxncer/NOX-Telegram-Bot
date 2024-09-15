@@ -4,4 +4,4 @@ services:
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: python telegram_bot.py
-    port: 8080
+    port: 10000
