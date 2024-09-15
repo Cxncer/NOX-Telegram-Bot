@@ -1,0 +1,51 @@
+name: Restart GitHub Codespaces
+
+# This workflow is triggered on a schedule (using cron) or manually (workflow_dispatch)
+on:
+  schedule:
+    # Schedule: Every day at midnight UTC (adjust the time to your needs)
+    - cron: '*/30 * * * *'
+  
+  workflow_dispatch: # Allows manual triggering of this workflow
+    inputs:
+      reason:
+        description: 'Reason for restart'
+        required: true
+
+jobs:
+  restart_codespace:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the current repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Install GitHub CLI (gh)
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install gh -y
+
+      # Step 3: Authenticate GitHub CLI using a GitHub token
+      - name: Authenticate GitHub CLI
+        run: |
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+
+      # Step 4: List active Codespaces and get the name of the first one
+      - name: Get Codespace Name
+        id: get_codespace
+        run: |
+          CODESPACE_NAME=$(gh codespace list --json name -q '.[0].name')
+          echo "CODESPACE_NAME=$CODESPACE_NAME" >> $GITHUB_ENV
+
+      # Step 5: Stop the active Codespace
+      - name: Stop Codespace
+        run: |
+          gh codespace stop -c "${{ env.CODESPACE_NAME }}"
+
+      # Step 6: Start a new Codespace
+      - name: Start new Codespace
+        run: |
+          REPO_URL="https://github.com/Cxncer/NOX-Telegram-Bot"
+          gh codespace create --repo "$REPO_URL"
